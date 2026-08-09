@@ -1,0 +1,17 @@
+{
+  "name": "ai-interview-agent-backend",
+  "version": "1.0.0",
+  "description": "Backend for the AI Interview Agent hackathon project",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "@google/genai": "^2.13.0",
+    "axios": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}

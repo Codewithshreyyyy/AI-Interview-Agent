@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Interview Agent | Interview Room</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/interview.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+<div class="bg-grid"></div>
+<div class="mouse-glow"></div>
+
+<header class="interview-header">
+    <div class="brand">
+        <div class="brand-icon">
+            <i data-lucide="brain-circuit"></i>
+        </div>
+        <div>
+            <h2>AI Interview Agent</h2>
+            <p>Adaptive • Intelligent • Personalized</p>
+        </div>
+    </div>
+
+    <div class="live-status">
+        <span class="live-dot"></span>
+        <span id="headerStatus">Interview in Progress</span>
+    </div>
+
+    <div class="header-right">
+        <button class="icon-button" id="themeButton" title="Toggle theme">
+            <i data-lucide="moon-star"></i>
+        </button>
+
+        <div class="session-box">
+            <span>Session ID</span>
+            <strong id="sessionId">----</strong>
+        </div>
+
+        <button class="end-button" id="endInterview">
+            <i data-lucide="log-out"></i>
+            End Interview
+        </button>
+    </div>
+</header>
+
+<main class="interview-page">
+
+    <!-- LEFT: CANDIDATE PROFILE -->
+    <aside class="candidate-panel">
+        <div class="panel-title">CANDIDATE PROFILE</div>
+
+        <div class="candidate-avatar">
+            <i data-lucide="user-round"></i>
+            <span class="online-dot"></span>
+        </div>
+
+        <h2 id="candidateName">Candidate</h2>
+        <p class="candidate-role" id="candidateRole">Interview Candidate</p>
+
+        <div class="profile-details">
+            <div class="detail-row">
+                <i data-lucide="id-card"></i>
+                <div><span>Candidate ID</span><strong id="candidateId">--</strong></div>
+            </div>
+            <div class="detail-row">
+                <i data-lucide="briefcase-business"></i>
+                <div><span>Goal</span><strong id="candidateGoal">Placement</strong></div>
+            </div>
+            <div class="detail-row">
+                <i data-lucide="graduation-cap"></i>
+                <div><span>Education</span><strong id="candidateEducation">--</strong></div>
+            </div>
+            <div class="detail-row">
+                <i data-lucide="calendar-days"></i>
+                <div><span>Curriculum</span><strong id="candidateDay">Day -- / 31</strong></div>
+            </div>
+        </div>
+
+        <div class="profile-divider"></div>
+
+        <div class="journey-title">INTERVIEW CONFIGURATION</div>
+
+        <div class="config-list">
+            <div><span>Questions</span><strong>8</strong></div>
+            <div><span>Difficulty</span><strong id="configDifficulty">Adaptive</strong></div>
+            <div><span>Follow-ups</span><strong class="green-text">Enabled</strong></div>
+            <div><span>Mode</span><strong id="candidateMode">New Candidate</strong></div>
+        </div>
+
+        <div class="privacy-note">
+            <i data-lucide="shield-check"></i>
+            <span>Your interview session is stored locally on this device.</span>
+        </div>
+    </aside>
+
+    <!-- CENTER: INTERVIEW -->
+    <section class="chat-panel">
+
+        <div class="chat-header">
+            <div>
+                <h1>INTERVIEW</h1>
+                <p>Live personalized technical interview</p>
+            </div>
+
+            <div class="question-progress">
+                <div class="progress-label">
+                    <span>Question <b id="questionNumber">1</b> of <b id="questionTotal">8</b></span>
+                    <b id="questionPercent">13%</b>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="questionProgress"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic-bar">
+            <div>
+                Current Topic:
+                <strong id="currentTopic">Preparing...</strong>
+            </div>
+            <div class="difficulty-badge">
+                <span></span>
+                Difficulty:
+                <strong id="currentDifficulty">Adaptive</strong>
+            </div>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <article class="message ai-message">
+                <div class="message-avatar ai-avatar">
+                    <i data-lucide="bot"></i>
+                </div>
+                <div class="message-body">
+                    <div class="message-meta">
+                        <strong>AI Interviewer</strong>
+                        <span id="questionTime">Now</span>
+                        <button class="copy-button" id="copyQuestion" title="Copy question">
+                            <i data-lucide="copy"></i>
+                        </button>
+                    </div>
+                    <div class="message-bubble" id="questionText">
+                        Preparing your first interview question...
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <div class="answer-section">
+            <div class="answer-label">
+                <span>Your Answer</span>
+                <span id="answerCounter">0 characters</span>
+            </div>
+
+            <textarea id="answerInput" placeholder="Type your answer here..."></textarea>
+
+            <div class="answer-actions">
+                <div class="left-tools">
+                    <button class="small-tool" id="micButton" title="Voice input">
+                        <i data-lucide="mic"></i>
+                    </button>
+                    <button class="small-tool" id="clearAnswer" title="Clear answer">
+                        <i data-lucide="eraser"></i>
+                    </button>
+                </div>
+
+                <button class="submit-button" id="submitAnswer">
+                    Submit Answer
+                    <i data-lucide="send"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="interview-tip">
+            <i data-lucide="lightbulb"></i>
+            <span>Take your time. Explain your reasoning and use examples when possible.</span>
+        </div>
+
+    </section>
+
+    <!-- RIGHT: LIVE INSIGHTS -->
+    <aside class="insights-panel">
+
+        <div class="panel-title">LIVE INSIGHTS</div>
+
+        <div class="insight-card">
+            <div class="insight-icon blue"><i data-lucide="book-open"></i></div>
+            <div>
+                <span>Current Topic</span>
+                <strong id="insightTopic">Preparing...</strong>
+            </div>
+        </div>
+
+        <div class="insight-card">
+            <div class="insight-icon yellow"><i data-lucide="gauge"></i></div>
+            <div>
+                <span>Difficulty Level</span>
+                <strong class="yellow-text" id="insightDifficulty">Adaptive</strong>
+            </div>
+        </div>
+
+        <div class="insight-card">
+            <div class="insight-icon green"><i data-lucide="messages-square"></i></div>
+            <div>
+                <span>Questions Asked</span>
+                <strong class="green-text" id="insightQuestions">0 / 8</strong>
+            </div>
+        </div>
+
+        <div class="insight-card">
+            <div class="insight-icon purple"><i data-lucide="clock-3"></i></div>
+            <div>
+                <span>Interview Time</span>
+                <strong id="interviewTimer">00:00</strong>
+            </div>
+        </div>
+
+        <div class="ai-status-card">
+            <div class="ai-status-top">
+                <div class="insight-icon cyan"><i data-lucide="sparkles"></i></div>
+                <div>
+                    <span>AI Status</span>
+                    <strong id="aiStatus">Waiting for answer</strong>
+                </div>
+            </div>
+            <p id="aiStatusDetail">The AI will evaluate your response after submission.</p>
+            <div class="status-track">
+                <div id="aiStatusBar"></div>
+            </div>
+        </div>
+
+        <div class="side-card progress-overview-card">
+            <h3>PROGRESS OVERVIEW</h3>
+            <div class="progress-overview">
+                <div class="donut" id="progressDonut">
+                    <strong id="donutValue">0%</strong>
+                    <span>Complete</span>
+                </div>
+                <div class="legend">
+                    <div><i class="completed-dot"></i>Completed <b id="completedCount">0</b></div>
+                    <div><i class="remaining-dot"></i>Remaining <b id="remainingCount">8</b></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="side-card">
+            <h3>QUICK ACTIONS</h3>
+            <button class="quick-action" id="hintButton">
+                <span><i data-lucide="lightbulb"></i> Get Hint</span>
+                <i data-lucide="chevron-right"></i>
+            </button>
+            <button class="quick-action" id="reportButton">
+                <span><i data-lucide="flag"></i> Report Issue</span>
+                <i data-lucide="chevron-right"></i>
+            </button>
+        </div>
+    </aside>
+</main>
+
+<footer class="interview-footer">
+    <button class="back-button" id="backButton">
+        <i data-lucide="arrow-left"></i>
+        Back
+    </button>
+
+    <div class="footer-security">
+        <i data-lucide="shield-check"></i>
+        Your interview data is stored securely on this device.
+    </div>
+
+    <button class="next-button" id="nextButton" disabled>
+        Next Question
+        <i data-lucide="arrow-right"></i>
+    </button>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/interview.js"></script>
+<script>
+    if (window.lucide) lucide.createIcons();
+</script>
+</body>
+</html>

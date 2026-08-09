@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Interview Agent | Personalization</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/personalize.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+</head>
+
+<body>
+
+<!-- Background -->
+
+<div class="bg-grid"></div>
+<div class="mouse-glow"></div>
+
+<!-- ========================================= -->
+<!-- HEADER -->
+<!-- ========================================= -->
+
+<header class="topbar">
+
+    <div class="logo">
+
+        <div class="logo-box">
+            <i data-lucide="brain-circuit"></i>
+        </div>
+
+        <div>
+
+            <h2>AI Interview Agent</h2>
+
+            <p>
+                Step 1 • Personalization
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="stepper">
+
+        <div class="step active">
+
+            1
+
+            <span>Personalize</span>
+
+        </div>
+
+        <div class="line"></div>
+
+        <div class="step">
+
+            2
+
+            <span>Prepare</span>
+
+        </div>
+
+        <div class="line"></div>
+
+        <div class="step">
+
+            3
+
+            <span>Interview</span>
+
+        </div>
+
+        <div class="line"></div>
+
+        <div class="step">
+
+            4
+
+            <span>Results</span>
+
+        </div>
+
+    </div>
+
+</header>
+
+<!-- ========================================= -->
+<!-- PAGE -->
+<!-- ========================================= -->
+
+<section class="personalize-page">
+
+    <div class="heading">
+
+        <span class="badge">
+
+            AI PERSONALIZATION
+
+        </span>
+
+        <h1>
+
+            Build Your
+
+            <span>
+
+                Interview Profile
+
+            </span>
+
+        </h1>
+
+        <p>
+
+            Configure your candidate profile, AI cohort progress,
+            and interview preferences before generating your
+            personalized technical interview.
+
+        </p>
+
+    </div>
+
+    <!-- ========================================= -->
+    <!-- MAIN LAYOUT -->
+    <!-- ========================================= -->
+
+    <div class="layout">
+
+        <!-- ========================================= -->
+        <!-- LEFT PANEL -->
+        <!-- ========================================= -->
+
+        <div class="left-panel"><!-- ===================================================== -->
+<!-- CANDIDATE PROFILE -->
+<!-- ===================================================== -->
+
+<div class="card">
+
+    <div class="card-title">
+
+        <div>
+
+            <h2>👤 Candidate Profile</h2>
+
+            <p>
+                Choose whether you want to create a new candidate
+                profile or load an existing one from the cohort dataset.
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- ============================= -->
+    <!-- Candidate Type -->
+    <!-- ============================= -->
+
+    <div class="candidate-selector">
+
+        <div class="candidate-card active"
+             id="newCandidateCard">
+
+            <div class="candidate-icon">
+
+                🆕
+
+            </div>
+
+            <h3>New Candidate</h3>
+
+            <p>
+
+                Create a fresh interview profile.
+
+            </p>
+
+        </div>
+
+        <div class="candidate-card"
+             id="existingCandidateCard">
+
+            <div class="candidate-icon">
+
+                📂
+
+            </div>
+
+            <h3>Existing Candidate</h3>
+
+            <p>
+
+                Load a candidate from the cohort.
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- ============================= -->
+    <!-- Existing Candidate Dropdown -->
+    <!-- ============================= -->
+
+    <div class="input-group"
+         id="existingCandidateBox"
+         style="display:none;">
+
+        <div class="input-group"
+     id="existingCandidateBox"
+     style="display:none;">
+
+    <label>
+
+        Enter Candidate ID
+
+    </label>
+
+    <input
+        type="text"
+        id="candidateIdSearch"
+        placeholder="Example: CAND-002"
+        autocomplete="off">
+
+    <small class="helper-text">
+
+        Enter the Candidate ID from candidates.json
+
+    </small>
+
+</div>
+
+    </div>
+
+    <!-- ============================= -->
+    <!-- Candidate Form -->
+    <!-- ============================= -->
+
+    <div class="form-grid">
+
+        <div class="input-group">
+
+            <label>
+
+                Candidate ID / Admission Number
+
+            </label>
+
+            <input
+                type="text"
+                id="candidateId"
+                placeholder="AI202600124">
+
+        </div>
+
+        <div class="input-group">
+
+            <label>
+
+                Full Name
+
+            </label>
+
+            <input
+                type="text"
+                id="candidateName"
+                placeholder="Enter full name">
+
+        </div>
+
+        <div class="input-group">
+
+            <label>
+
+                Job Role
+
+            </label>
+
+            <select id="jobRole">
+
+                <option value="">
+
+                    Select Job Role
+
+                </option>
+
+                <option>
+
+                    AI Engineer
+
+                </option>
+
+                <option>
+
+                    Backend Software Engineer
+
+                </option>
+
+                <option>
+
+                    Frontend Developer
+
+                </option>
+
+                <option>
+
+                    Full Stack Developer
+
+                </option>
+
+                <option>
+
+                    Machine Learning Engineer
+
+                </option>
+
+                <option>
+
+                    Software Engineer
+
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="input-group">
+
+            <label>
+
+                Years of Experience
+
+            </label>
+
+            <input
+                type="number"
+                id="experience"
+                min="0"
+                max="40"
+                value="0">
+
+        </div>
+
+        <div class="input-group">
+
+            <label>
+
+                Highest Education
+
+            </label>
+
+            <select id="education">
+
+                <option value="">
+
+                    Select Education
+
+                </option>
+
+                <option>
+
+                    B.Tech Computer Science
+
+                </option>
+
+                <option>
+
+                    B.Tech AI & ML
+
+                </option>
+
+                <option>
+
+                    BCA
+
+                </option>
+
+                <option>
+
+                    MCA
+
+                </option>
+
+                <option>
+
+                    M.Tech
+
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="input-group">
+
+            <label>
+
+                Candidate Status
+
+            </label>
+
+            <select id="candidateStatus">
+
+                <option selected>
+
+                    IN_PROGRESS
+
+                </option>
+
+                <option>
+
+                    COMPLETED
+
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+</div><!-- ===================================================== -->
+<!-- INTERVIEW GOAL -->
+<!-- ===================================================== -->
+
+<div class="card">
+
+    <div class="card-title">
+
+        <div>
+
+            <h2>🎯 Interview Goal</h2>
+
+            <p>
+
+                Tell the AI what you're preparing for so it can
+                personalize the interview experience.
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="goal-grid">
+
+        <div class="goal-card active"
+             data-goal="Placement">
+
+            <div class="goal-icon">
+
+                💼
+
+            </div>
+
+            <h3>
+
+                Placement
+
+            </h3>
+
+            <p>
+
+                Campus placement preparation.
+
+            </p>
+
+        </div>
+
+        <div class="goal-card"
+             data-goal="Job Interview">
+
+            <div class="goal-icon">
+
+                🚀
+
+            </div>
+
+            <h3>
+
+                Job Interview
+
+            </h3>
+
+            <p>
+
+                Company technical interview.
+
+            </p>
+
+        </div>
+
+        <div class="goal-card"
+             data-goal="Knowledge Test">
+
+            <div class="goal-icon">
+
+                📚
+
+            </div>
+
+            <h3>
+
+                Knowledge Test
+
+            </h3>
+
+            <p>
+
+                Evaluate your curriculum knowledge.
+
+            </p>
+
+        </div>
+
+        <div class="goal-card"
+             data-goal="Practice">
+
+            <div class="goal-icon">
+
+                🧠
+
+            </div>
+
+            <h3>
+
+                Practice
+
+            </h3>
+
+            <p>
+
+                Improve confidence and communication.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ===================================================== -->
+<!-- AI COHORT PROGRESS -->
+<!-- ===================================================== -->
+
+<div class="card">
+
+    <div class="card-title">
+
+        <div>
+
+            <h2>📚 AI Cohort Progress</h2>
+
+            <p>
+
+                Select the last curriculum day you've completed.
+                The AI will only ask questions from completed topics.
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- Day Selector -->
+
+    <div class="day-selector">
+
+        <button
+            class="day-btn"
+            id="minusDay">
+
+            <i data-lucide="minus"></i>
+
+        </button>
+
+        <input
+            type="number"
+            id="dayInput"
+            min="1"
+            max="31"
+            value="20">
+
+        <button
+            class="day-btn"
+            id="plusDay">
+
+            <i data-lucide="plus"></i>
+
+        </button>
+
+    </div>
+
+    <!-- Slider -->
+
+    <div class="slider-wrapper">
+
+        <input
+            type="range"
+            id="daySlider"
+            min="1"
+            max="31"
+            value="20">
+
+    </div>
+
+    <!-- Progress -->
+
+    <div class="progress-info">
+
+        <div class="progress-left">
+
+            <h3>
+
+                Day
+
+                <span id="selectedDay">
+
+                    20
+
+                </span>
+
+            </h3>
+
+            <div class="module-title">
+
+                Current Learning Stage
+
+            </div>
+
+            <strong id="currentModule">
+
+                LLM Core, Prompting & Fine-Tuning
+
+            </strong>
+
+            <p id="moduleRange">
+
+                Day 16 – Day 20
+
+            </p>
+
+        </div>
+
+        <div class="progress-right">
+
+            <strong id="completedDays">
+
+                20 / 31 Days
+
+            </strong>
+
+            <small id="remainingDays">
+
+                11 Days Remaining
+
+            </small>
+
+        </div>
+
+    </div>
+
+    <!-- Progress Bar -->
+
+    <div class="progress-bar">
+
+        <div
+            class="progress-fill"
+            id="progressFill"
+            style="width:64%">
+
+        </div>
+
+    </div>
+
+    <!-- Covered Curriculum -->
+
+    <div class="covered-topics">
+
+        <h3>
+
+            Curriculum Covered
+
+        </h3>
+
+        <div id="coveredTopics">
+
+            <!-- JS will generate completed modules -->
+
+        </div>
+
+    </div>
+
+    <!-- Interview Scope -->
+
+    <div class="scope-box">
+
+        <h4>
+
+            🎯 Interview Scope
+
+        </h4>
+
+        <p>
+
+            Questions will only be generated from the curriculum
+            completed up to the selected day. Adaptive follow-up
+            questions will be generated dynamically based on
+            your responses.
+
+        </p>
+
+    </div>
+
+</div><!-- ===================================================== -->
+<!-- GENERATE INTERVIEW -->
+<!-- ===================================================== -->
+
+<div class="generate">
+
+    <button
+        id="generateInterview"
+        class="primary-btn">
+
+        <i data-lucide="sparkles"></i>
+
+        <span>Generate Personalized Interview</span>
+
+    </button>
+
+</div>
+
+</div>
+
+<!-- ===================================================== -->
+<!-- RIGHT PANEL -->
+<!-- ===================================================== -->
+
+<div class="right-panel">
+
+    <!-- ========================================= -->
+    <!-- CANDIDATE SUMMARY -->
+    <!-- ========================================= -->
+
+    <div class="preview-card">
+
+        <h2>👤 Candidate Summary</h2>
+
+        <div class="preview-row">
+            <span>Candidate ID</span>
+            <strong id="previewId">--</strong>
+        </div>
+
+        <div class="preview-row">
+            <span>Name</span>
+            <strong id="previewName">--</strong>
+        </div>
+
+        <div class="preview-row">
+            <span>Job Role</span>
+            <strong id="previewRole">--</strong>
+        </div>
+
+        <div class="preview-row">
+            <span>Experience</span>
+            <strong id="previewExperience">0 Years</strong>
+        </div>
+
+        <div class="preview-row">
+            <span>Education</span>
+            <strong id="previewEducation">--</strong>
+        </div>
+
+        <div class="preview-row">
+            <span>Status</span>
+            <strong id="previewStatus"
+                    class="ready">
+
+                IN_PROGRESS
+
+            </strong>
+        </div>
+
+    </div>
+
+
+
+    <!-- ========================================= -->
+    <!-- INTERVIEW SUMMARY -->
+    <!-- ========================================= -->
+
+    <div class="preview-card hidden" id="interviewSummaryCard">
+
+        <h2>📋 Interview Summary</h2>
+
+        <div class="preview-row">
+            <span>Interview Goal</span>
+            <strong id="previewGoal">Placement</strong>
+        </div>
+
+        <div class="preview-row">
+            <span>Curriculum</span>
+            <strong id="previewCoverage">
+                Day 1 – 20
+            </strong>
+        </div>
+
+        <div class="preview-row">
+            <span>Completed Days</span>
+            <strong id="previewDays">
+                20 / 31
+            </strong>
+        </div>
+
+        <div class="preview-row">
+            <span>Estimated Questions</span>
+            <strong>
+                8 Questions
+            </strong>
+        </div>
+
+        <div class="preview-row">
+            <span>Adaptive Follow-ups</span>
+            <strong class="ready">
+
+                Enabled
+
+            </strong>
+        </div>
+
+        <div class="preview-row">
+            <span>Estimated Time</span>
+            <strong>
+
+                15 – 20 Minutes
+
+            </strong>
+        </div>
+
+    </div>
+
+
+
+    <!-- ========================================= -->
+    <!-- AI READINESS -->
+    <!-- ========================================= -->
+
+    <div class="preview-card">
+
+        <h2>🚀 AI Readiness</h2>
+
+        <div class="experience-circle">
+            <span style="color: rgb(44, 154, 106); font-size: 40px;">AI</span>
+
+        </div>
+
+        <h3
+            style="
+            text-align:center;
+            margin-top:15px;">
+
+            Ready To Begin
+
+        </h3>
+
+        <p
+            style="
+            text-align:center;
+            margin-top:12px;">
+
+            Your profile is complete and the AI
+            has enough information to generate
+            a personalized interview based on
+            your curriculum progress.
+
+        </p>
+
+        <div class="flow">
+
+            <div>
+
+                ✅ Candidate Profile Ready
+
+            </div>
+
+            <div>
+
+                ✅ Curriculum Progress Selected
+
+            </div>
+
+            <div>
+
+                ✅ Interview Goal Configured
+
+            </div>
+
+            <div>
+
+                ✅ AI Ready To Generate Questions
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+</section><!-- ========================================= -->
+<!-- JAVASCRIPT -->
+<!-- ========================================= -->
+
+<script src="js/personalize.js"></script>
+
+<script>
+
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+</script>
+
+</body>
+
+</html>

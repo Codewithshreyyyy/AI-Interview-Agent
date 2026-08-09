@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Interview Agent — Results</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/result.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="result-page">
+
+<header class="result-topbar">
+    <div class="brand">
+        <div class="brand-icon"><i data-lucide="brain-circuit"></i></div>
+        <div>
+            <h1>AI Interview Agent</h1>
+            <p>Adaptive. Intelligent. Personalized.</p>
+        </div>
+    </div>
+
+    <div class="steps">
+        <span class="step done"><b>1</b> Personalize</span>
+        <span class="line"></span>
+        <span class="step done"><b>2</b> Prepare</span>
+        <span class="line"></span>
+        <span class="step done"><b>3</b> Interview</span>
+        <span class="line"></span>
+        <span class="step active"><b>4</b> Results</span>
+    </div>
+
+    <div class="result-user">
+        <button class="icon-btn" id="themeButton" title="Toggle theme">
+            <i data-lucide="moon"></i>
+        </button>
+        <div class="user-mini">
+            <i data-lucide="user-round"></i>
+            <div>
+                <strong id="candidateName">Candidate</strong>
+                <small id="candidateId">CAND-002</small>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="result-container">
+
+    <div class="result-heading">
+        <div>
+            <h2>Interview Completed! 🎉</h2>
+            <p>Here is your AI evaluation and detailed review.</p>
+        </div>
+        <div class="heading-actions">
+            <button class="outline-btn" id="downloadBtn">
+                <i data-lucide="download"></i> Download Report
+            </button>
+            <button class="outline-btn" id="shareBtn">
+                <i data-lucide="share-2"></i> Share Result
+            </button>
+        </div>
+    </div>
+
+    <!-- TOP SCORE -->
+    <section class="summary-card">
+        <div class="score-area">
+            <div class="score-ring">
+                <div class="score-inner">
+                    <strong id="overallScore">82</strong>
+                    <span>/ 100</span>
+                </div>
+            </div>
+            <h3 id="performanceLabel">Good Performance</h3>
+            <p id="performanceSubtext">You demonstrated a strong understanding of the concepts.</p>
+        </div>
+
+        <div class="summary-divider"></div>
+
+        <div class="summary-stats">
+            <div class="stat-card">
+                <div class="stat-icon blue"><i data-lucide="message-square-check"></i></div>
+                <small>Questions Answered</small>
+                <strong id="answeredCount">8 / 8</strong>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon purple"><i data-lucide="clock-3"></i></div>
+                <small>Total Time</small>
+                <strong><span id="totalTime">48:32</span> <em>min</em></strong>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon green"><i data-lucide="target"></i></div>
+                <small>Accuracy</small>
+                <strong id="accuracy">78%</strong>
+            </div>
+        </div>
+    </section>
+
+    <!-- PERFORMANCE BREAKDOWN -->
+    <section class="section">
+        <h3 class="section-title">Performance Breakdown</h3>
+
+        <div class="breakdown-grid">
+            <div class="breakdown-card">
+                <div class="breakdown-icon green"><i data-lucide="book-open"></i></div>
+                <div class="breakdown-info">
+                    <small>Technical Knowledge</small>
+                    <strong>85 <span>/ 100</span></strong>
+                    <div class="meter"><i style="width:85%"></i></div>
+                </div>
+            </div>
+
+            <div class="breakdown-card">
+                <div class="breakdown-icon blue"><i data-lucide="puzzle"></i></div>
+                <div class="breakdown-info">
+                    <small>Problem Solving</small>
+                    <strong>80 <span>/ 100</span></strong>
+                    <div class="meter"><i style="width:80%"></i></div>
+                </div>
+            </div>
+
+            <div class="breakdown-card">
+                <div class="breakdown-icon purple"><i data-lucide="message-circle"></i></div>
+                <div class="breakdown-info">
+                    <small>Communication</small>
+                    <strong>75 <span>/ 100</span></strong>
+                    <div class="meter"><i style="width:75%"></i></div>
+                </div>
+            </div>
+
+            <div class="breakdown-card">
+                <div class="breakdown-icon yellow"><i data-lucide="zap"></i></div>
+                <div class="breakdown-info">
+                    <small>Confidence</small>
+                    <strong>78 <span>/ 100</span></strong>
+                    <div class="meter"><i style="width:78%"></i></div>
+                </div>
+            </div>
+
+            <div class="breakdown-card">
+                <div class="breakdown-icon green"><i data-lucide="circle-check"></i></div>
+                <div class="breakdown-info">
+                    <small>Accuracy</small>
+                    <strong>88 <span>/ 100</span></strong>
+                    <div class="meter"><i style="width:88%"></i></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI REVIEW -->
+    <section class="review-grid">
+        <div class="review-card">
+            <h3><i data-lucide="sparkles"></i> AI Review</h3>
+            <p id="aiReview">
+                You have a solid understanding of core computer science concepts and
+                explained most answers clearly. Your problem-solving approach is good,
+                but some answers could have deeper explanations and real-world examples.
+                Keep practicing advanced topics and system design to further strengthen
+                your profile.
+            </p>
+        </div>
+
+        <div class="review-card strengths">
+            <h3><i data-lucide="circle-check"></i> Strengths</h3>
+            <ul>
+                <li>Strong understanding of core concepts</li>
+                <li>Good problem-solving approach</li>
+                <li>Clear and structured communication</li>
+                <li>Confident in answering most questions</li>
+            </ul>
+        </div>
+
+        <div class="review-card improvements">
+            <h3><i data-lucide="triangle-alert"></i> Areas to Improve</h3>
+            <ul>
+                <li>Provide more real-world examples</li>
+                <li>Improve depth in advanced topics</li>
+                <li>Structure your answers better</li>
+                <li>Improve time management</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- QUESTION REVIEW -->
+    <section class="section">
+        <h3 class="section-title">Question by Question Review</h3>
+
+        <div class="question-list" id="questionList"></div>
+    </section>
+
+    <!-- RECOMMENDATIONS -->
+    <section class="recommendations">
+        <h3 class="section-title"><i data-lucide="lightbulb"></i> AI Recommendations</h3>
+
+        <div class="recommendation-grid">
+            <div class="recommendation-card">
+                <div class="rec-icon green"><i data-lucide="book-open"></i></div>
+                <h4>Topics to Revise</h4>
+                <ul>
+                    <li>Advanced Prompt Engineering</li>
+                    <li>Transformer Architecture</li>
+                    <li>Vector Databases</li>
+                </ul>
+                <button class="rec-btn green-btn" id="learningBtn">Start Learning</button>
+            </div>
+
+            <div class="recommendation-card">
+                <div class="rec-icon blue"><i data-lucide="target"></i></div>
+                <h4>Suggested Practice</h4>
+                <ul>
+                    <li>Solve more system design problems</li>
+                    <li>Practice RAG-based projects</li>
+                    <li>Work on real-world LLM applications</li>
+                </ul>
+                <button class="rec-btn blue-btn" id="practiceBtn">Practice Now</button>
+            </div>
+
+            <div class="recommendation-card">
+                <div class="rec-icon purple"><i data-lucide="trending-up"></i></div>
+                <h4>Next Interview</h4>
+                <p>Based on your performance, we recommend taking a Medium difficulty interview next.</p>
+                <button class="rec-btn purple-btn" id="nextInterviewBtn">Take Next Interview</button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="result-actions">
+        <button class="back-result" id="backInterview">
+            <i data-lucide="arrow-left"></i> Back to Interview
+        </button>
+        <button class="practice-result" id="practiceAgain">
+            <i data-lucide="rotate-cw"></i> Practice Again
+        </button>
+        <button class="dashboard-result" id="dashboardBtn">
+            <i data-lucide="house"></i> Go to Dashboard
+        </button>
+    </footer>
+
+</main>
+
+<!-- VIEW DETAIL MODAL -->
+<div class="detail-overlay" id="detailOverlay">
+    <div class="detail-modal">
+        <button class="modal-close" id="closeDetail"><i data-lucide="x"></i></button>
+        <span class="modal-label" id="detailQuestionNo">QUESTION 1</span>
+        <h2 id="detailQuestion">Question</h2>
+
+        <div class="detail-block">
+            <h4>Your Answer</h4>
+            <p id="detailAnswer">Your answer will appear here.</p>
+        </div>
+
+        <div class="detail-block ai-block">
+            <h4><i data-lucide="sparkles"></i> AI Evaluation</h4>
+            <p id="detailEvaluation">
+                Backend-generated evaluation will be displayed here.
+            </p>
+        </div>
+
+        <div class="detail-block">
+            <h4>How to Answer</h4>
+            <p id="detailHowTo">
+                Backend-generated explanation of how this question can be answered will appear here.
+            </p>
+        </div>
+
+        <div class="detail-block">
+            <h4>Suggested Answer</h4>
+            <p id="detailSuggested">
+                Backend-generated ideal answer will be displayed here.
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/result.js"></script>
+</body>
+</html>

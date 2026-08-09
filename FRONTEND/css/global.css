@@ -1,0 +1,250 @@
+/* ===================================================
+   AI Interview Agent
+   Global Styles
+=================================================== */
+
+/* Google Fonts */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+/* Reset */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:'Inter',sans-serif;
+    background:#0D1117;
+    color:#F0F6FC;
+    overflow-x:hidden;
+}
+
+/* =======================
+        VARIABLES
+======================= */
+
+:root{
+
+    --bg:#0D1117;
+
+    --card:#161B22;
+
+    --card-hover:#1C2128;
+
+    --border:#30363D;
+
+    --primary:#58A6FF;
+
+    --primary-hover:#79C0FF;
+
+    --success:#3FB950;
+
+    --warning:#D29922;
+
+    --danger:#F85149;
+
+    --text:#F0F6FC;
+
+    --muted:#8B949E;
+
+    --shadow:0 15px 40px rgba(0,0,0,.35);
+
+    --radius:18px;
+
+}
+
+/* =======================
+        HEADINGS
+======================= */
+
+h1,h2,h3,h4,h5{
+
+    font-family:'Space Grotesk',sans-serif;
+
+    font-weight:700;
+
+}
+
+p{
+
+    color:var(--muted);
+
+    line-height:1.8;
+
+}
+
+/* =======================
+        LINKS
+======================= */
+
+a{
+
+    text-decoration:none;
+
+    color:inherit;
+
+}
+
+/* =======================
+        BUTTONS
+======================= */
+
+button{
+
+    cursor:pointer;
+
+    border:none;
+
+    outline:none;
+
+    font-family:'Inter',sans-serif;
+
+}
+
+/* =======================
+      SECTION PADDING
+======================= */
+
+section{
+
+    padding:90px 8%;
+
+}
+
+/* =======================
+      CONTAINER
+======================= */
+
+.container{
+
+    width:100%;
+
+    max-width:1400px;
+
+    margin:auto;
+
+}
+
+/* =======================
+        SCROLLBAR
+======================= */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#0D1117;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#30363D;
+
+    border-radius:50px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#58A6FF;
+
+}
+
+/* =======================
+      TEXT SELECTION
+======================= */
+
+::selection{
+
+    background:#58A6FF;
+
+    color:white;
+
+}
+
+/* =======================
+      HERO GRADIENT TEXT
+======================= */
+
+.hero span{
+
+    background:linear-gradient(
+        90deg,
+        #58A6FF,
+        #3FB950
+    );
+
+    -webkit-background-clip:text;
+
+    color:transparent;
+
+}
+
+/* =======================
+      GLASS EFFECT
+======================= */
+
+.glass{
+
+    background:rgba(255,255,255,.04);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+}
+
+/* =======================
+      IMAGE
+======================= */
+
+img{
+
+    width:100%;
+
+    display:block;
+
+}
+
+/* =======================
+      LIST
+======================= */
+
+ul{
+
+    list-style:none;
+
+}
+
+/* =======================
+      INPUT
+======================= */
+
+input,
+textarea{
+
+    font-family:'Inter',sans-serif;
+
+}
+
+/* =======================
+      TRANSITION
+======================= */
+
+*{
+
+    transition:.25s ease;
+
+}
