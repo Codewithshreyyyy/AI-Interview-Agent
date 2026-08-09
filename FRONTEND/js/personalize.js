@@ -345,12 +345,10 @@ async function loadInterviewData() {
     try {
 
         const candidateResponse =
-            await fetch("../backend/data/candidates.json");
+    await fetch("https://ai-interview-agent-un2c.onrender.com/data/candidates.json");
 
-        const curriculumResponse =
-            await fetch("../backend/data/curriculum.json");
-
-
+const curriculumResponse =
+    await fetch("https://ai-interview-agent-un2c.onrender.com/data/curriculum.json");
         if (!candidateResponse.ok) {
 
             throw new Error(
