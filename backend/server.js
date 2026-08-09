@@ -2,6 +2,7 @@
 
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 require("dotenv").config();
 
 const { generateResponse } = require("./services/geminiService");
@@ -10,10 +11,35 @@ const { writeMemory } = require("./services/breethService");
 const app = express();
 const PORT = process.env.PORT || 5001;
 
+// =====================================================
+// MIDDLEWARE
+// =====================================================
+
 app.use(cors());
 app.use(express.json());
 
-// Health check
+// =====================================================
+// SERVE BACKEND DATA FILES
+// =====================================================
+
+// This makes these files publicly accessible:
+//
+// /data/candidates.json
+// /data/curriculum.json
+//
+// They are stored inside:
+//
+// backend/data/
+
+app.use(
+    "/data",
+    express.static(path.join(__dirname, "data"))
+);
+
+// =====================================================
+// HEALTH CHECK
+// =====================================================
+
 app.get("/", (req, res) => {
     res.json({
         success: true,
@@ -21,7 +47,10 @@ app.get("/", (req, res) => {
     });
 });
 
-// Gemini test endpoint
+// =====================================================
+// GEMINI TEST ENDPOINT
+// =====================================================
+
 app.get("/api/test-gemini", async (req, res) => {
     try {
         const response = await generateResponse(
@@ -43,7 +72,10 @@ app.get("/api/test-gemini", async (req, res) => {
     }
 });
 
-// Breeth test endpoint
+// =====================================================
+// BREETH TEST ENDPOINT
+// =====================================================
+
 app.get("/api/test-breeth", async (req, res) => {
     try {
         const result = await writeMemory(
@@ -66,7 +98,10 @@ app.get("/api/test-breeth", async (req, res) => {
     }
 });
 
-// Breeth search test endpoint
+// =====================================================
+// BREETH SEARCH TEST ENDPOINT
+// =====================================================
+
 app.get("/api/test-breeth-search", async (req, res) => {
     try {
         const { searchMemory } = require("./services/breethService");
@@ -95,15 +130,25 @@ app.get("/api/test-breeth-search", async (req, res) => {
     }
 });
 
-// Main AI Interview endpoint
+// =====================================================
+// MAIN AI INTERVIEW ENDPOINT
+// =====================================================
+
 app.use(
     "/api/interview",
     require("./routes/interviewRoutes")
 );
 
-// Start server
+// =====================================================
+// START SERVER
+// =====================================================
+
 app.listen(PORT, () => {
     console.log(
-        `Server running on http://localhost:${PORT}`
+        `Server running on port ${PORT}`
+    );
+
+    console.log(
+        `Data directory: ${path.join(__dirname, "data")}`
     );
 });
