@@ -1,16 +1,37 @@
 
 const { GoogleGenAI } = require("@google/genai");
 
-const ai = new GoogleGenAI({
-    apiKey: process.env.GEMINI_API_KEY
-});
+// --------------------------------------------------
+// Gemini client
+// --------------------------------------------------
 
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+
+if (!GEMINI_API_KEY) {
+    console.error(
+        "ERROR: GEMINI_API_KEY is not configured."
+    );
+} else {
+    console.log(
+        "Gemini API key detected successfully."
+    );
+}
+
+const ai = new GoogleGenAI({
+    apiKey: GEMINI_API_KEY
+});
 
 // --------------------------------------------------
 // Generate Gemini response
 // --------------------------------------------------
 
 async function generateResponse(prompt) {
+
+    if (!GEMINI_API_KEY) {
+        throw new Error(
+            "GEMINI_API_KEY is missing on the backend."
+        );
+    }
 
     const maxRetries = 3;
 
@@ -25,37 +46,28 @@ async function generateResponse(prompt) {
             const response =
                 await ai.models.generateContent({
 
-                    // Stable Flash model
                     model: "gemini-3.5-flash-lite",
 
                     contents: prompt,
 
                     config: {
-                        
                         maxOutputTokens: 1500
                     }
                 });
 
-
-            const text =
-                response?.text;
-
+            const text = response?.text;
 
             if (!text) {
-
                 throw new Error(
                     "Gemini returned an empty response."
                 );
             }
 
-
             console.log(
                 "Gemini response received successfully."
             );
 
-
             return text;
-
 
         } catch (error) {
 
@@ -69,11 +81,9 @@ async function generateResponse(prompt) {
                 "=================================="
             );
 
-
             const status =
                 error?.status ||
                 error?.code;
-
 
             const message =
                 String(
@@ -81,36 +91,30 @@ async function generateResponse(prompt) {
                     error
                 );
 
-
             const isRateLimit =
                 status === 429 ||
                 message.includes("429") ||
                 message.includes("RESOURCE_EXHAUSTED") ||
-                message.includes("quota");
-
+                message.toLowerCase().includes("quota");
 
             // ------------------------------------------
             // Don't retry non-rate-limit errors
             // ------------------------------------------
 
             if (!isRateLimit) {
-
                 throw error;
             }
-
 
             // ------------------------------------------
             // Last attempt
             // ------------------------------------------
 
             if (attempt === maxRetries) {
-
                 throw new Error(
                     "Gemini API quota/rate limit exceeded. " +
                     "Please wait and try again."
                 );
             }
-
 
             // ------------------------------------------
             // Exponential backoff
@@ -124,7 +128,6 @@ async function generateResponse(prompt) {
                 `Gemini rate limit reached. Retrying in ${delay / 1000}s...`
             );
 
-
             await new Promise(
                 resolve =>
                     setTimeout(resolve, delay)
@@ -132,7 +135,6 @@ async function generateResponse(prompt) {
         }
     }
 }
-
 
 // --------------------------------------------------
 // Export
