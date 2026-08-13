@@ -182,29 +182,26 @@ function showToast(message) {
 /* ============================================================
    START REAL BACKEND SESSION
 ============================================================ */
-
 async function startBackendInterview() {
-    try {
-        let sessionId =
-            localStorage.getItem("interviewSessionId") ||
-            localStorage.getItem("sessionId");
 
-        if (!sessionId) {
-            sessionId =
-                `INT-${Date.now()
-                    .toString(36)
-                    .toUpperCase()}`;
-        }
+    try {
 
         /*
-         * Backend currently has CAND-003 available
-         * for our integration testing.
-         *
-         * We use the configured candidate ID first,
-         * but fall back to CAND-003 for testing.
+         * ALWAYS create a fresh session
+         * when starting a new interview.
          */
 
-        const candidate = getCandidate();
+        const sessionId =
+            `INT-${Date.now()
+                .toString(36)
+                .toUpperCase()}`;
+
+        /*
+         * Get candidate information.
+         */
+
+        const candidate =
+            getCandidate();
 
         const candidateId =
             candidate.id ||
@@ -216,28 +213,38 @@ async function startBackendInterview() {
             candidateId
         );
 
-        const response = await fetch(
-            `${API_BASE_URL}/api/interview`,
-            {
-                method: "POST",
+        /*
+         * Start backend interview.
+         */
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+        const response =
+            await fetch(
+                `${API_BASE_URL}/api/interview`,
+                {
+                    method: "POST",
 
-                body: JSON.stringify({
-                    sessionId,
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
 
-                    candidate: {
-                        member: {
-                            id: candidateId
+                    body: JSON.stringify({
+
+                        sessionId,
+
+                        candidate: {
+                            member: {
+                                id:
+                                    candidateId
+                            }
                         }
-                    }
-                })
-            }
-        );
 
-        const data = await response.json();
+                    })
+                }
+            );
+
+        const data =
+            await response.json();
 
         console.log(
             "Backend interview start response:",
@@ -245,9 +252,9 @@ async function startBackendInterview() {
         );
 
         if (!response.ok) {
+
             /*
-             * If the configured candidate does not exist,
-             * retry once using our known backend test candidate.
+             * Fallback to known test candidate.
              */
 
             if (
@@ -257,6 +264,7 @@ async function startBackendInterview() {
                     .toLowerCase()
                     .includes("candidate not found")
             ) {
+
                 console.warn(
                     "Configured candidate not found. Retrying with CAND-003..."
                 );
@@ -273,13 +281,16 @@ async function startBackendInterview() {
                             },
 
                             body: JSON.stringify({
+
                                 sessionId,
 
                                 candidate: {
                                     member: {
-                                        id: "CAND-003"
+                                        id:
+                                            "CAND-003"
                                     }
                                 }
+
                             })
                         }
                     );
@@ -287,12 +298,8 @@ async function startBackendInterview() {
                 const retryData =
                     await retryResponse.json();
 
-                console.log(
-                    "Backend retry response:",
-                    retryData
-                );
-
                 if (!retryResponse.ok) {
+
                     throw new Error(
                         retryData.error ||
                         "Backend could not start interview."
@@ -301,10 +308,36 @@ async function startBackendInterview() {
 
                 backendSessionId =
                     retryData.sessionId ||
-                    retryData.session?.sessionId ||
                     sessionId;
 
                 backendReady = true;
+
+                /*
+                 * IMPORTANT:
+                 * Gemini's first question is
+                 * returned as "reply".
+                 */
+
+                const firstQuestion =
+                    retryData.reply ||
+                    retryData.nextQuestion ||
+                    retryData.question;
+
+                if (firstQuestion) {
+
+                    questions[0] =
+                        normalizeQuestion(
+                            firstQuestion,
+                            0
+                        );
+
+                    currentQuestion = 0;
+
+                    console.log(
+                        "REAL LLM FIRST QUESTION:",
+                        questions[0]
+                    );
+                }
 
                 localStorage.setItem(
                     "interviewSessionId",
@@ -330,12 +363,46 @@ async function startBackendInterview() {
             );
         }
 
+        /*
+         * Backend session successfully started.
+         */
+
         backendSessionId =
             data.sessionId ||
             data.session?.sessionId ||
             sessionId;
 
         backendReady = true;
+
+        /*
+         * IMPORTANT:
+         * Use Gemini's REAL first question.
+         */
+
+        const firstQuestion =
+            data.reply ||
+            data.nextQuestion ||
+            data.question;
+
+        if (firstQuestion) {
+
+            questions[0] =
+                normalizeQuestion(
+                    firstQuestion,
+                    0
+                );
+
+            currentQuestion = 0;
+
+            console.log(
+                "REAL LLM FIRST QUESTION:",
+                questions[0]
+            );
+        }
+
+        /*
+         * Save the NEW session.
+         */
 
         localStorage.setItem(
             "interviewSessionId",
@@ -347,6 +414,16 @@ async function startBackendInterview() {
             backendSessionId
         );
 
+        /*
+         * Very important:
+         * Old completion flag must not survive
+         * into a new interview.
+         */
+
+        localStorage.removeItem(
+            "interviewCompleted"
+        );
+
         console.log(
             "REAL BACKEND SESSION STARTED:",
             backendSessionId
@@ -355,6 +432,7 @@ async function startBackendInterview() {
         return data;
 
     } catch (error) {
+
         console.error(
             "Backend interview start failed:",
             error
@@ -893,24 +971,40 @@ async function submitAnswer() {
         }
 
         /*
-         * If backend returns a new question,
-         * use it for the next question.
-         */
+ * IMPORTANT:
+ * Backend returns the next Gemini question
+ * inside "reply".
+ *
+ * Store that question in questions[]
+ * so the Next button displays the REAL
+ * LLM-generated question instead of the
+ * old fallback question.
+ */
 
-        const backendQuestion =
-            data.nextQuestion &&
-                typeof data.nextQuestion ===
-                "object"
-                ? data.nextQuestion
-                : null;
+        if (!data.done) {
 
-        if (backendQuestion) {
-            questions[
-                currentQuestion + 1
-            ] = normalizeQuestion(
-                backendQuestion,
-                currentQuestion + 1
-            );
+            const nextQuestionText =
+                data.reply ||
+                data.response ||
+                data.nextQuestion ||
+                data.question;
+
+            if (nextQuestionText) {
+
+                questions[
+                    currentQuestion + 1
+                ] = normalizeQuestion(
+                    nextQuestionText,
+                    currentQuestion + 1
+                );
+
+                console.log(
+                    "REAL LLM NEXT QUESTION:",
+                    questions[
+                    currentQuestion + 1
+                    ]
+                );
+            }
         }
 
         /*
@@ -1011,7 +1105,9 @@ async function submitAnswer() {
 ============================================================ */
 
 function nextQuestion() {
+
     if (!answered) {
+
         showToast(
             "Submit your answer before continuing."
         );
@@ -1019,17 +1115,34 @@ function nextQuestion() {
         return;
     }
 
+    /*
+     * If we have already answered the
+     * 8th question, finish the interview.
+     */
+
     if (
         currentQuestion >=
-        questions.length - 1
+        TOTAL_QUESTIONS - 1
     ) {
+
         finishInterview();
 
         return;
-
     }
 
+    /*
+     * Move to the question that was
+     * generated by Gemini and stored
+     * in questions[].
+     */
+
     currentQuestion++;
+
+    console.log(
+        "Moving to question:",
+        currentQuestion + 1,
+        questions[currentQuestion]
+    );
 
     renderQuestion();
 
@@ -1300,11 +1413,15 @@ function startVoiceInput() {
    INITIALIZE
 ============================================================ */
 
+
+
 async function init() {
 
     config =
         getConfig();
 
+    // Keep fallback questions available,
+    // but DO NOT render them before backend responds.
     questions =
         getQuestions();
 
@@ -1320,7 +1437,27 @@ async function init() {
      * before rendering the interview.
      */
 
-    await startBackendInterview();
+    const backendStarted =
+        await startBackendInterview();
+
+    /*
+     * Only render after backend has had a chance
+     * to provide the real Gemini question.
+     */
+
+    if (backendStarted) {
+
+        console.log(
+            "Rendering REAL backend question:",
+            questions[0]
+        );
+
+    } else {
+
+        console.warn(
+            "Backend unavailable. Using fallback question."
+        );
+    }
 
     updateCandidateUI();
 
@@ -1535,4 +1672,4 @@ async function init() {
 document.addEventListener(
     "DOMContentLoaded",
     init
-);
+); 
